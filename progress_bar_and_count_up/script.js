@@ -1,6 +1,10 @@
 const screenUp = (num) => {
     const loadingText = document.getElementById("loading-text");
-    loadingText.innerHTML = `${num} %`;
+    if (num < 100) {
+      loadingText.innerHTML = `Loading ...${num} %`;
+    } else {
+      loadingText.innerHTML = `Complete! ${num} %`;
+    }
 }
 function updateProgress(newWidth) {
     const progressBar = document.querySelector('.progress-bar');
@@ -18,9 +22,12 @@ const interval = (num, interval_time) => {
   if (num < 100) {
     setTimeout(() => interval(num, interval_time), interval_time);
   } else {
-    document.querySelector('.progress-container').style.display = 'none';
-    document.querySelector('.loading-text').style.display = 'none'
-    document.querySelector('.main-content').style.display = 'block';
+    screenUp(num)
+    setTimeout(() => {
+      document.querySelector('.progress-container').style.display = 'none';
+      document.querySelector('.loading-text').style.display = 'none'
+      document.querySelector('.main-content').style.display = 'block';
+    }, 700);
   }
 }
 
